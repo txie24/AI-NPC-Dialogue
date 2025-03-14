@@ -23,3 +23,4 @@ Follow these steps to set up the project:
 - pip install pipwin
 - python -m pip install pyaudio
 - pip install SpeechRecognition
+- pip install openai (update)
