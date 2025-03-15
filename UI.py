@@ -5,12 +5,13 @@ import requests
 import tempfile
 import os
 from playsound import playsound
+import openai
 
 # --- Configuration for ElevenLabs TTS ---
 ELEVENLABS_API_KEY = "sk_3f2270c1a206d6a3c0d0c821283fb004bea27d73e2aeb810"  # Your API key
 VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
 # ----------------------------------------
-
+    
 def speak_text(text):
     """
     Uses ElevenLabs TTS API to convert text to speech and plays the resulting audio.
@@ -49,10 +50,22 @@ def speak_text(text):
         print("TTS API call failed:", response.status_code, response.text)
 
 def get_npc_response(user_input):
-    """
-    In this demo, the NPC simply echoes back what the user said.
-    """
-    return user_input
+    # 设置你的 OpenAI API 密钥
+    openai.api_key = "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"
+    try:
+        response = openai.ChatCompletion.create(
+            model="o3-mini",  # 或者其他你选择的模型
+            messages=[
+                {"role": "system", "content": "You're a helpful AI assistant."},
+                {"role": "user", "content": user_input}
+            ]
+        )
+        # 提取 GPT 的回复文本
+        answer = response["choices"][0]["message"]["content"]
+        return answer
+    except Exception as e:
+        print("Error calling GPT API.", e)
+        return "Sorry, I can't generate an answer right now."
 
 def get_voice_input():
     """
