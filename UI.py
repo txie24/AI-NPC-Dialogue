@@ -51,10 +51,10 @@ def speak_text(text):
 
 def get_npc_response(user_input):
     # 设置你的 OpenAI API 密钥
-    openai.api_key = "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"
+    openai.api_key = "Key Here"
     try:
         response = openai.ChatCompletion.create(
-            model="o3-mini",  # 或者其他你选择的模型
+            model="gpt-4o-mini",  # 或者其他你选择的模型
             messages=[
                 {"role": "system", "content": "You're a helpful AI assistant."},
                 {"role": "user", "content": user_input}

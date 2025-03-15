@@ -26,4 +26,4 @@ Follow these steps to set up the project:
 - pip install SpeechRecognition
 - pip install SpeechRecognition playsound requests
 - pip install elevenlabs
-- pip install openai
+- pip install openai==0.28
