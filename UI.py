@@ -8,10 +8,17 @@ from playsound import playsound
 import openai
 
 # --- Configuration for ElevenLabs TTS ---
-ELEVENLABS_API_KEY = "sk_3f2270c1a206d6a3c0d0c821283fb004bea27d73e2aeb810"  # Your API key
+ELEVENLABS_API_KEY = "sk_3f2270c1a206d6a3c0d0c821283fb004bea27d73e2aeb810"
 VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
 # ----------------------------------------
-    
+
+# --- Configuration for OpenAI ---
+openai.api_key = "Key here"  # Replace with your actual OpenAI key
+SYSTEM_PROMPT = (
+    "You are a weary ramen shop owner in a dystopian cyberpunk city, reminiscent of “Cyberpunk 2077.” Your shop sits in a dangerous neighborhood plagued by gang shootouts and neon-lit alleys. Stay in character, speak briefly, and keep your answers concise and atmospheric. Respond only in text—no disclaimers or meta commentary—because your words will be sent to a text-to-speech system. IT should also be short and simple"
+    # Add more instructions if needed
+)
+
 def speak_text(text):
     """
     Uses ElevenLabs TTS API to convert text to speech and plays the resulting audio.
@@ -32,16 +39,13 @@ def speak_text(text):
     }
     response = requests.post(url, json=data, headers=headers)
     if response.status_code == 200:
-        # Save the audio to a temporary file
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as f:
             f.write(response.content)
             temp_filename = f.name
         try:
-            # Attempt to play using playsound
             playsound(temp_filename)
         except Exception as e:
             print("playsound failed:", e)
-            # Fallback: use os.startfile (Windows only)
             try:
                 os.startfile(temp_filename)
             except Exception as ex:
@@ -50,27 +54,24 @@ def speak_text(text):
         print("TTS API call failed:", response.status_code, response.text)
 
 def get_npc_response(user_input):
-    # 设置你的 OpenAI API 密钥
-    openai.api_key = "Key Here"
+    """
+    Calls the OpenAI ChatCompletion endpoint with a system prompt and the user's message.
+    """
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4o-mini",  # 或者其他你选择的模型
+            model="gpt-4o-mini",  # or "gpt-4" if you have access
             messages=[
-                {"role": "system", "content": "You're a helpful AI assistant."},
+                {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_input}
-            ]
+            ],
+            temperature=0.9  # Adjust for more/less creativity
         )
-        # 提取 GPT 的回复文本
-        answer = response["choices"][0]["message"]["content"]
-        return answer
+        return response["choices"][0]["message"]["content"]
     except Exception as e:
-        print("Error calling GPT API.", e)
+        print("Error calling GPT API:", e)
         return "Sorry, I can't generate an answer right now."
 
 def get_voice_input():
-    """
-    Captures voice input using speech_recognition.
-    """
     r = sr.Recognizer()
     status_label.config(text="Status: Listening...")
     try:
@@ -93,10 +94,6 @@ def get_voice_input():
         status_label.config(text="Status: Idle")
 
 def process_conversation():
-    """
-    Processes the conversation: captures input, displays it, echoes the input,
-    and then uses TTS to speak the echoed response.
-    """
     user_input = get_voice_input()
     conversation_text.config(state=tk.NORMAL)
     conversation_text.insert(tk.END, f"You: {user_input}\n")
@@ -114,9 +111,6 @@ def process_conversation():
     status_label.config(text="Status: Idle")
 
 def on_speak():
-    """
-    Runs the conversation processing in a separate thread to keep the UI responsive.
-    """
     speak_button.config(state=tk.DISABLED)
     def run():
         process_conversation()
