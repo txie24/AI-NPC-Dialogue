@@ -1,25 +1,71 @@
 import tkinter as tk
 import speech_recognition as sr
 from threading import Thread
+import requests
+import tempfile
+import os
+from playsound import playsound
 
-# Placeholder for your AI response function.
+# --- Configuration for ElevenLabs TTS ---
+ELEVENLABS_API_KEY = "sk_3f2270c1a206d6a3c0d0c821283fb004bea27d73e2aeb810"  # Your API key
+VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
+# ----------------------------------------
+
+def speak_text(text):
+    """
+    Uses ElevenLabs TTS API to convert text to speech and plays the resulting audio.
+    """
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+    headers = {
+        "Accept": "audio/mpeg",
+        "xi-api-key": ELEVENLABS_API_KEY,
+        "Content-Type": "application/json"
+    }
+    data = {
+        "text": text,
+        "model_id": "eleven_monolingual_v1",
+        "voice_settings": {
+            "stability": 0.75,
+            "similarity_boost": 0.75
+        }
+    }
+    response = requests.post(url, json=data, headers=headers)
+    if response.status_code == 200:
+        # Save the audio to a temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as f:
+            f.write(response.content)
+            temp_filename = f.name
+        try:
+            # Attempt to play using playsound
+            playsound(temp_filename)
+        except Exception as e:
+            print("playsound failed:", e)
+            # Fallback: use os.startfile (Windows only)
+            try:
+                os.startfile(temp_filename)
+            except Exception as ex:
+                print("Fallback failed:", ex)
+    else:
+        print("TTS API call failed:", response.status_code, response.text)
+
 def get_npc_response(user_input):
-    # For demonstration, simply echo the input with a message.
-    return f"I heard you say: '{user_input}'"
+    """
+    In this demo, the NPC simply echoes back what the user said.
+    """
+    return user_input
 
-# Function to capture voice input using speech_recognition
 def get_voice_input():
+    """
+    Captures voice input using speech_recognition.
+    """
     r = sr.Recognizer()
-    # Update status label to indicate that listening has started.
     status_label.config(text="Status: Listening...")
     try:
         with sr.Microphone() as source:
             conversation_text.config(state=tk.NORMAL)
             conversation_text.insert(tk.END, "Listening...\n")
             conversation_text.see(tk.END)
-            # Listen for voice input (5-second timeout)
             audio = r.listen(source, timeout=5)
-            # Recognize using Google's speech recognition (requires internet)
             voice_text = r.recognize_google(audio)
             return voice_text
     except sr.WaitTimeoutError:
@@ -31,56 +77,50 @@ def get_voice_input():
     except Exception as e:
         return f"Error: {str(e)}"
     finally:
-        # Reset status after listening attempt is complete.
         status_label.config(text="Status: Idle")
 
-# Function to process the conversation
 def process_conversation():
-    # Capture the user's voice input
+    """
+    Processes the conversation: captures input, displays it, echoes the input,
+    and then uses TTS to speak the echoed response.
+    """
     user_input = get_voice_input()
-    
     conversation_text.config(state=tk.NORMAL)
     conversation_text.insert(tk.END, f"You: {user_input}\n")
     conversation_text.see(tk.END)
     
-    # Update status label to show that the system is processing
     status_label.config(text="Status: Processing...")
-    
-    # Get the NPC's response (replace with your AI code)
     npc_response = get_npc_response(user_input)
-    
-    # Display the NPC's response
     conversation_text.insert(tk.END, f"NPC: {npc_response}\n\n")
     conversation_text.see(tk.END)
     conversation_text.config(state=tk.DISABLED)
     
-    # Reset status to idle after processing is complete
+    # Have the NPC speak its response using TTS
+    speak_text(npc_response)
+    
     status_label.config(text="Status: Idle")
 
-# Function to run conversation processing in a separate thread (to avoid UI freezing)
 def on_speak():
-    # Optionally disable the button while processing to prevent duplicate clicks
+    """
+    Runs the conversation processing in a separate thread to keep the UI responsive.
+    """
     speak_button.config(state=tk.DISABLED)
     def run():
         process_conversation()
         speak_button.config(state=tk.NORMAL)
     Thread(target=run).start()
 
-# Set up the main Tkinter window
+# --- Tkinter UI Setup ---
 root = tk.Tk()
 root.title("AI NPC Dialogue System")
 
-# Create a text widget to display conversation
 conversation_text = tk.Text(root, state=tk.DISABLED, wrap="word", height=20, width=60)
 conversation_text.pack(padx=10, pady=10)
 
-# Create a label to display the current status
 status_label = tk.Label(root, text="Status: Idle")
 status_label.pack(padx=10, pady=(0, 10))
 
-# Create a button to trigger voice input
 speak_button = tk.Button(root, text="Speak", command=on_speak)
 speak_button.pack(padx=10, pady=(0, 10))
 
-# Start the Tkinter event loop
 root.mainloop()
