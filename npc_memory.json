@@ -43,6 +43,22 @@
     {
       "role": "assistant",
       "content": "Of course, Max. You had the spicy miso ramen. Still burning in your memory, huh?"
+    },
+    {
+      "role": "user",
+      "content": "hey what's up Soto do you still remember"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I remember you. The city never lets me forget faces—or troubles. What do you need?"
+    },
+    {
+      "role": "user",
+      "content": "hey what's up Soto do you remember"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I remember you well. The city breathes danger, but you bring a bit of light. What brings you back?"
     }
   ],
   "wasteland_merchant": [
