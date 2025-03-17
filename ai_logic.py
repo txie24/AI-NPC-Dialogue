@@ -10,7 +10,7 @@ ELEVENLABS_API_KEY = "YOUR_ELEVENLABS_API_KEY"
 VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
 
 # --- Configuration for OpenAI ---
-openai.api_key = "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"
+openai.api_key = ""
 
 # File to persist NPC conversation memory
 MEMORY_FILE = "npc_memory.json"
