@@ -2,6 +2,13 @@
 
 This project is a demonstration of an AI-driven NPC dialogue system built in Python. It uses a simple Tkinter UI for interaction, leverages the SpeechRecognition library for capturing voice input, and serves as a basis for integrating advanced AI dialogue systems (e.g., GPT) later on.
 
+## Update Log
+Mar 17
+- Now has 3 NPCs where has long term memories Where if you restart the program it will still remeber the conversation from the last runtime.
+- Now has 3 .py files Run.py(main run program) ai_logic.py(where all the APIs and logics are) UI.py(where the UI settings are).
+- New toggle to turn off TTS to conserve TTS Tokens in the UI menu.
+- npc_memory.json (dont edit this files unless you want to reset the memory).
+
 ## Features
 
 - **Voice Input:** Uses the SpeechRecognition library to capture and process spoken user input.
