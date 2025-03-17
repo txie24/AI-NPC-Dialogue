@@ -15,6 +15,7 @@ This project is a demonstration of an AI-driven NPC dialogue system built in Pyt
 - [pipwin]
 - [PyAudio]
 - [elevenlabs]
+- [OpenAI]
 
 ## Installation
 
