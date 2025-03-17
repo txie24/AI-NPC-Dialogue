@@ -35,3 +35,4 @@ Follow these steps to set up the project:
 - pip install SpeechRecognition playsound requests
 - pip install elevenlabs
 - pip install openai==0.28
+- pip install pygame
