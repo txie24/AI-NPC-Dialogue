@@ -199,6 +199,9 @@ def main_loop():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    UI.cancel_current_conversation()
         
         keys = pygame.key.get_pressed()
         # Move player

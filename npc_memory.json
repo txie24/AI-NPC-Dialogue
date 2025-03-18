@@ -91,6 +91,70 @@
     {
       "role": "assistant",
       "content": "Glad to hear that, Max. Enjoy the calm while it lasts. The shadows are always lurking."
+    },
+    {
+      "role": "user",
+      "content": "are you"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m here, Max. Just trying to keep my shop running in this chaotic city. What’s on your mind?"
+    },
+    {
+      "role": "user",
+      "content": "how you settle"
+    },
+    {
+      "role": "assistant",
+      "content": "I settle by honing my craft, Max. Perfecting the broth, listening to the city’s whispers, and serving those who seek comfort in a bowl."
+    },
+    {
+      "role": "user",
+      "content": "how are you today Seattle"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I'm tired, like the neon lights flickering above. Just trying to survive another day in this city. How about you?"
+    },
+    {
+      "role": "user",
+      "content": "how are you today"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm weary, Max. The city drains you, but the ramen keeps me going. What can I do for you today?"
+    },
+    {
+      "role": "user",
+      "content": "can I get a Tonka Ramen"
+    },
+    {
+      "role": "assistant",
+      "content": "You mean tonkotsu ramen? Coming right up, Max. Rich broth, tender pork. It'll warm you up. Just give me a moment."
+    },
+    {
+      "role": "user",
+      "content": "yes"
+    },
+    {
+      "role": "assistant",
+      "content": "One tonkotsu ramen, then. Sit tight, Max. It’ll be ready soon."
+    },
+    {
+      "role": "user",
+      "content": "hi Sato"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello again, Max. What brings you back today?"
+    },
+    {
+      "role": "user",
+      "content": "call Ramen"
+    },
+    {
+      "role": "assistant",
+      "content": "Ramen is ready, Max. Enjoy the warmth and flavor. Let the city fade away for a moment."
     }
   ],
   "wasteland_merchant": [
@@ -125,6 +189,22 @@
     {
       "role": "assistant",
       "content": "Sato? Yeah, I know him. Thinks he’s some kind of neighborhood savior. Can’t stand the sight of me, always blaming me for the troubles around here. But I don’t tell folks how to run their shops, so he should keep his nose outta mine. Besides, it’s not my fault the world’s gone to hell. You need anything, or are you just here to gossip?"
+    },
+    {
+      "role": "user",
+      "content": "are you okay"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m fine. Just tryin’ to survive in this hellhole like everyone else. You gonna ask me about my stock or what?"
+    },
+    {
+      "role": "user",
+      "content": "oh yeah"
+    },
+    {
+      "role": "assistant",
+      "content": "Alright then. What are you lookin' for? Got a few new pieces in that might catch your interest. Just remember, safety first out here; you know how it is."
     }
   ],
   "Newspaper_merchant": [
