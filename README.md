@@ -8,6 +8,10 @@ Mar 17
 - Now has 3 .py files Run.py(main run program) ai_logic.py(where all the APIs and logics are) UI.py(where the UI settings are).
 - New toggle to turn off TTS to conserve TTS Tokens in the UI menu.
 - npc_memory.json (dont edit this files unless you want to reset the memory).
+- Now has a new game.py which is a side scroller game demo to show the different AI NPCs
+
+## TODOs
+- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant 
 
 ## Features
 
