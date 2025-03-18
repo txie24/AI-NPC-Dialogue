@@ -13,7 +13,8 @@ Mar 17
 
 - Added three NPC interactions with AI, and fixed a possible MP3 player issue.
 - A main loop has been added so that run.py can directly display all the content we need and run the game.
-- Added a function to “cancel_current_conversation()” by pressing Esc during a dialog, without forcibly interrupting the voice recording or TTS playback that has already started.
+- Added a function to “cancel_current_conversation()” by pressing Esc during a dialog, without forcibly interrupting the voice recording or TTS playback that has already started. (x)
+- Ensure that only one recording will be initiated by using the global "in conversation" lock or disabling Key+DisableSpace.
 ## TODOs
 - Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in **ai_logic.py** (✔)
 - Fix the Voice latency including both input and output 
