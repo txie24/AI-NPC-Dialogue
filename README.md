@@ -5,14 +5,14 @@ This project is a demonstration of an AI-driven NPC dialogue system built in Pyt
 ## Update Log
 Mar 17
 - Now has 3 NPCs where has long term memories Where if you restart the program it will still remeber the conversation from the last runtime.
-- Now has 3 .py files Run.py(main run program) ai_logic.py(where all the APIs and logics are) UI.py(where the UI settings are).
+- Now has 3 .py files **Run.py(main run program)** **ai_logic.py(where all the APIs and logics are)** **UI.py(where the UI settings are)**.
 - New toggle to turn off TTS to conserve TTS Tokens in the UI menu.
-- npc_memory.json (dont edit this files unless you want to reset the memory).
-- Now has a new game.py which is a side scroller game demo to show the different AI NPCs
-- New Assets folder which has all of the new game assets in there
+- **npc_memory.json** (dont edit this files unless you want to reset the memory).
+- Now has a new **game.py** which is a side scroller game demo to show the different AI NPCs
+- New **Assets folder** which has all of the new game assets in there
 
 ## TODOs
-- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in ai_logic.py
+- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in **ai_logic.py**
 
 ## Features
 
@@ -28,12 +28,12 @@ Mar 17
 - [PyAudio]
 - [elevenlabs]
 - [OpenAI]
+- [pygame]
 
 ## Installation
 
-Follow these steps to set up the project:
+Install these plugins to set up the project:
 
-1. **Install SpeechRecognition:**
 - pip install pipwin
 - python -m pip install pyaudio
 - pip install SpeechRecognition
