@@ -13,6 +13,7 @@ Mar 17
 
 ## TODOs
 - Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in **ai_logic.py**
+- Fix the Voice latency including both input and output
 
 ## Features
 
