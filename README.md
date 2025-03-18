@@ -11,9 +11,12 @@ Mar 17
 - Now has a new **game.py** which is a side scroller game demo to show the different AI NPCs
 - New **Assets folder** which has all of the new game assets in there
 
+- Added three NPC interactions with AI, and fixed a possible MP3 player issue.
+- A main loop has been added so that run.py can directly display all the content we need and run the game.
+- Added a function to “cancel_current_conversation()” by pressing Esc during a dialog, without forcibly interrupting the voice recording or TTS playback that has already started.
 ## TODOs
-- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in **ai_logic.py**
-- Fix the Voice latency including both input and output
+- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in **ai_logic.py** (✔)
+- Fix the Voice latency including both input and output 
 - Update error messages so that if there is an error like "Listening timed out, please try again." it wont be sent to the AI as an input.
 
 ## Features
