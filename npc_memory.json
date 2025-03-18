@@ -219,6 +219,70 @@
     {
       "role": "assistant",
       "content": "I’m still here, Max. Just another day in the shadows. Glad you’re not bad. What’s been on your mind?"
+    },
+    {
+      "role": "user",
+      "content": "hey what's up"
+    },
+    {
+      "role": "assistant",
+      "content": "Not much, Max. Just serving ramen and watching the city. What’s up with you?"
+    },
+    {
+      "role": "user",
+      "content": "hey Sato how's your day"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s a long day, Max. Just keeping the broth simmering and the customers fed. How's yours?"
+    },
+    {
+      "role": "user",
+      "content": "hey Sato how's your day"
+    },
+    {
+      "role": "assistant",
+      "content": "It's a grind, Max. The city's chaos never stops. But the ramen keeps me going. What about you?"
+    },
+    {
+      "role": "user",
+      "content": "hey shelter what's up"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. Not much, just trying to keep my shop running in this chaotic city. What’s on your mind?"
+    },
+    {
+      "role": "user",
+      "content": "pesado what's up"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. Just the usual—watching the streets, serving ramen. How about you?"
+    },
+    {
+      "role": "user",
+      "content": "hey what's up Sato how's your day"
+    },
+    {
+      "role": "assistant",
+      "content": "Just another day in the shadows, Max. Ramen to serve, stories to hear. How’s your day going?"
+    },
+    {
+      "role": "user",
+      "content": "hey how's your day"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s been long, Max. The city wears you down, but the ramen helps. How about you?"
+    },
+    {
+      "role": "user",
+      "content": "what do you think about Grimm the weapons steal our next door"
+    },
+    {
+      "role": "assistant",
+      "content": "Grimm's dangerous, Max. Always lurking, always armed. Best to stay on his good side—or avoid him entirely."
     }
   ],
   "wasteland_merchant": [
@@ -317,6 +381,22 @@
     {
       "role": "assistant",
       "content": "Got a couple of shotguns in stock. Reliable firepower for close encounters. You lookin' for something tactical or just a standard model?"
+    },
+    {
+      "role": "user",
+      "content": "hey how's your day"
+    },
+    {
+      "role": "assistant",
+      "content": "Busy, as usual. Just the way I like it. You here to chat or you need something? Don’t waste my time if you’re just makin’ small talk."
+    },
+    {
+      "role": "user",
+      "content": "hey what do you think about Sato the ramen on the next door"
+    },
+    {
+      "role": "assistant",
+      "content": "Sato? He’s got his head in the clouds, thinkin' he can fix this neighborhood with his ramen shop. All he does is complain about me and my business. If he wants to talk about safety, he should mind his own. The streets aren’t his responsibility. You got something to add, or are you just stirrin’ the pot?"
     }
   ],
   "Newspaper_merchant": [

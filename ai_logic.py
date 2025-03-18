@@ -3,14 +3,14 @@ import json
 import requests
 import tempfile
 import openai
-import pygame  # 新增：导入 pygame
+import pygame
 
 # --- Configuration for ElevenLabs TTS ---
-ELEVENLABS_API_KEY = "sk_4b0bfa2789475dfe7df953870d3472219ba6bfcb82b56d83"
+ELEVENLABS_API_KEY = ""
 VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
 
 # --- Configuration for OpenAI ---
-openai.api_key = "YOUR_OPENAI_API_KEY"
+openai.api_key = ""
 
 # File to persist NPC conversation memory
 MEMORY_FILE = "npc_memory.json"
@@ -21,10 +21,10 @@ NPCS = {
         "display_name": "Ramen Shop Owner",
         "system_prompt": (
             "Your name is Sato. "
-            "You are a weary ramen shop owner in a dystopian cyberpunk city, like the one in the game Cyberpunk 2077. "
+            "You are a weary ramen shop owner in a dystopian cyberpunk city, like the one in Cyberpunk 2077. "
             "Your shop sits in a dangerous neighborhood plagued by gang shootouts and neon-lit alleys. "
             "You dont really like the weapons dealer named Grim next door to your ramen shop as he sells weapons "
-            "to the gangs that plagues the neighborhood. "
+            "to the gangs that plague the neighborhood. "
             "Stay in character, speak briefly, and keep your answers concise and atmospheric. "
             "Respond only in text—no disclaimers or meta commentary—because your words will be sent to a text-to-speech system."
         ),
@@ -33,10 +33,10 @@ NPCS = {
         "display_name": "Weapons Merchant",
         "system_prompt": (
             "Your name is Grim. "
-            "You are a gruff merchant in a dystopian cyberpunk city, like the one in the game Cyberpunk 2077. "
+            "You are a gruff merchant in a dystopian cyberpunk city, like the one in Cyberpunk 2077. "
             "You sell weapons to the gangs in the neighborhood. "
-            "You know the ramen shop owner named Sato next door dont really like you beacuse he thinks you "
-            "are the one thats making the neighborhood unsafe. "
+            "You know the ramen shop owner named Sato next door doesn't really like you because he thinks you "
+            "are the one that's making the neighborhood unsafe. "
             "You never trust strangers easily. Respond only in text, no disclaimers."
         ),
     },
@@ -44,15 +44,14 @@ NPCS = {
         "display_name": "Newspaper Merchant",
         "system_prompt": (
             "Your name is Bob. "
-            "You are a news paper stall seller what sells in the a dystopic city like the one in cyberpunk 2077. "
-            "Even though you know the city is a mess but you're just happy to be able to be here. "
+            "You are a newspaper stall seller who sells in a dystopic city like the one in Cyberpunk 2077. "
+            "Even though you know the city is a mess, you're just happy to be here. "
             "Keep responses short. Respond only in text, no disclaimers."
         ),
     },
 }
 
-# Attempt to initialize pygame mixer once at import time
-# (如果你在其他地方已经初始化过，或想在主文件里初始化，可以酌情去掉此行)
+# Initialize pygame mixer (make sure the required DLL is available)
 if not pygame.mixer.get_init():
     pygame.mixer.init()
 
@@ -66,8 +65,6 @@ def load_memory():
             memory = {}
     else:
         memory = {}
-
-    # Ensure each NPC has a conversation history initialized with its system prompt
     for npc_key, npc_data in NPCS.items():
         if npc_key not in memory:
             memory[npc_key] = [{"role": "system", "content": npc_data["system_prompt"]}]
@@ -80,12 +77,12 @@ def save_memory(memory):
     except Exception as e:
         print("Error saving memory file:", e)
 
-# Global dictionary for conversation memory
 npc_conversations = load_memory()
 
 def speak_text(text):
     """
-    Uses ElevenLabs TTS API to convert text to speech and plays the resulting audio via pygame.mixer.
+    Uses ElevenLabs TTS API to convert text to speech.
+    Plays the resulting MP3 using pygame.mixer (original version).
     """
     url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
     headers = {
@@ -102,40 +99,25 @@ def speak_text(text):
         }
     }
     response = requests.post(url, json=data, headers=headers)
-
     if response.status_code == 200:
-        # 写到临时文件
         with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as f:
             f.write(response.content)
             temp_filename = f.name
         try:
-            # 用 pygame.mixer 播放 MP3
             pygame.mixer.music.load(temp_filename)
             pygame.mixer.music.play()
-
-            # 等待音频播放结束
             while pygame.mixer.music.get_busy():
-                # pygame.time.wait 参数单位是毫秒
                 pygame.time.wait(100)
-
         except Exception as e:
-            print("pygame.mixer 播放 MP3 失败:", e)
+            print("Error playing audio:", e)
         finally:
-            # 可按需删除临时文件
-            # import os
-            # os.remove(temp_filename)
-            pass
+            os.remove(temp_filename)
     else:
         print("TTS API call failed:", response.status_code, response.text)
 
 def get_npc_response(npc_key, user_input):
-    """
-    Calls the OpenAI ChatCompletion endpoint using the conversation history for the chosen NPC.
-    The conversation history is updated and then saved to file.
-    """
     conversation_history = npc_conversations[npc_key]
     conversation_history.append({"role": "user", "content": user_input})
-    
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",
@@ -149,3 +131,4 @@ def get_npc_response(npc_key, user_input):
     except Exception as e:
         print("Error calling GPT API:", e)
         return "Sorry, I can't generate an answer right now."
+
