@@ -9,9 +9,10 @@ Mar 17
 - New toggle to turn off TTS to conserve TTS Tokens in the UI menu.
 - npc_memory.json (dont edit this files unless you want to reset the memory).
 - Now has a new game.py which is a side scroller game demo to show the different AI NPCs
+- New Assets folder which has all of the new game assets in there
 
 ## TODOs
-- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant 
+- Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in ai_logic.py
 
 ## Features
 
