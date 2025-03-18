@@ -75,6 +75,22 @@
     {
       "role": "assistant",
       "content": "He's trouble, Max. Always a buyer and seller of chaos. Best to steer clear unless you want to get caught in the crossfire."
+    },
+    {
+      "role": "user",
+      "content": "Hi how are you today"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm weary, Max. The city's dark weight never lifts. But the ramen keeps me going. How about you?"
+    },
+    {
+      "role": "user",
+      "content": "so far so good"
+    },
+    {
+      "role": "assistant",
+      "content": "Glad to hear that, Max. Enjoy the calm while it lasts. The shadows are always lurking."
     }
   ],
   "wasteland_merchant": [

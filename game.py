@@ -1,5 +1,9 @@
 import pygame
 import sys
+import threading
+import UI  # 确保 UI.py 中有 trigger_conversation_from_game 函数
+
+conversation_log = []  # 用于存储最近几条对话文本
 
 # Initialize Pygame
 pygame.init()
@@ -46,6 +50,41 @@ margin = 10
 center_ramen = WIDTH / 4
 center_weapon = WIDTH / 2
 center_newspaper = 3 * WIDTH / 4
+
+# 映射游戏中的 stall key 到 UI/ai_logic 中对应的 NPC key
+npc_mappings = {
+    "ramen_owner": "ramen_owner",       # 对应 ai_logic.py 里的 ramen_owner
+    "weapon_stall": "Weapons_merchant",
+    "newspaper_stall": "Newspaper_merchant"
+}
+
+def add_chat_message(msg):
+    """
+    往 conversation_log 里插入一条新文本。
+    为防止列表无限增长，可以限制最大行数
+    """
+    max_lines = 8  # 你可以按需求改
+    conversation_log.append(msg)
+    if len(conversation_log) > max_lines:
+        conversation_log.pop(0)
+
+def start_conversation(npc_key):
+    """
+    当玩家按下空格时，被调用。
+    """
+    if npc_key == "ramen_owner":
+        print("Starting conversation with Sato!")
+    elif npc_key == "weapon_stall":
+        print("Starting conversation with Grim!")
+    elif npc_key == "newspaper_stall":
+        print("Starting conversation with Bob!")
+
+    # 调用 UI 中的函数来触发对话逻辑（语音输入 + GPT + TTS）
+    # 这里利用 npc_mappings，把游戏用的key转换成ai_logic中的key
+    if npc_key in npc_mappings:
+        UI.trigger_conversation_from_game(npc_mappings[npc_key])
+    else:
+        print("Warning: No mapping found for NPC key:", npc_key)
 
 # Calculate stall positions: x = center - (stall_width/2), y = HEIGHT - stall_height - margin
 npc_stalls = {
@@ -101,6 +140,17 @@ def draw_text_with_border(text, pos, font, text_color, border_color, border_widt
     text_surface = font.render(text, True, text_color)
     screen.blit(text_surface, pos)
 
+def draw_conversation_log():
+    """
+    把 conversation_log 中的行，逐行渲染到屏幕上，示例放在左上角。
+    """
+    x = 10
+    y = 10
+    line_height = 24
+    for msg in conversation_log:
+        draw_text_with_border(msg, (x, y), font, WHITE, BLACK)
+        y += line_height
+
 def draw_scene(collision_message=None):
     # Draw background
     screen.blit(background_image, (0, 0))
@@ -134,66 +184,66 @@ def draw_scene(collision_message=None):
     # Draw the player
     screen.blit(player_image, (player_rect.x, player_rect.y))
     
+    # 绘制左上角的对话日志
+    draw_conversation_log()
+
     # If there is a collision message, draw it with border
     if collision_message:
         draw_text_with_border(collision_message["text"], collision_message["pos"],
                               font, WHITE, BLACK)
 
-def start_conversation(npc_key):
-    # For now, simply print a message.
-    # Use the new interaction names: Sato for ramen_owner, Grim for weapon_stall, Bob for newspaper_stall.
-    if npc_key == "ramen_owner":
-        print("Starting conversation with Sato!")
-    elif npc_key == "weapon_stall":
-        print("Starting conversation with Grim!")
-    elif npc_key == "newspaper_stall":
-        print("Starting conversation with Bob!")
+def main_loop():
+    clock = pygame.time.Clock()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        
+        keys = pygame.key.get_pressed()
+        # Move player
+        if keys[pygame.K_LEFT]:
+            player_rect.x -= player_speed
+            if player_rect.x < 0:
+                player_rect.x = 0
+        if keys[pygame.K_RIGHT]:
+            player_rect.x += player_speed
+            if player_rect.x > WIDTH - player_rect.width:
+                player_rect.x = WIDTH - player_rect.width
+                
+        # Check for collision and prepare message
+        collision_message = None
+        conversation_npc = None
 
-clock = pygame.time.Clock()
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-    
-    keys = pygame.key.get_pressed()
-    # Move player
-    if keys[pygame.K_LEFT]:
-        player_rect.x -= player_speed
-        if player_rect.x < 0:
-            player_rect.x = 0
-    if keys[pygame.K_RIGHT]:
-        player_rect.x += player_speed
-        if player_rect.x > WIDTH - player_rect.width:
-            player_rect.x = WIDTH - player_rect.width
-            
-    # Check for collision and prepare message
-    collision_message = None
-    conversation_npc = None
-    # For "ramen_owner", check collision with ramen_chef_rect
-    if player_rect.colliderect(ramen_chef_rect):
-        collision_message = {"text": "Press SPACE to talk to Sato",
-                             "pos": (ramen_chef_rect.x, ramen_chef_rect.y - 40)}
-        conversation_npc = "ramen_owner"
-    # For "weapon_stall", check collision with weapon_seller_rect
-    elif player_rect.colliderect(weapon_seller_rect):
-        collision_message = {"text": "Press SPACE to talk to Grim",
-                             "pos": (weapon_seller_rect.x, weapon_seller_rect.y - 40)}
-        conversation_npc = "weapon_stall"
-    else:
-        # Check collision for newspaper stall using newspaper_seller_rect
-        if player_rect.colliderect(newspaper_seller_rect):
-            collision_message = {"text": "Press SPACE to talk to Bob",
-                                 "pos": (newspaper_seller_rect.x, newspaper_seller_rect.y - 40)}
-            conversation_npc = "newspaper_stall"
-    
-    # Draw scene with optional collision message
-    draw_scene(collision_message)
-    
-    # Check if space is pressed while in collision
-    if conversation_npc and keys[pygame.K_SPACE]:
-        start_conversation(conversation_npc)
-    
-    pygame.display.flip()
-    clock.tick(30)
+        # For "ramen_owner", check collision with ramen_chef_rect
+        if player_rect.colliderect(ramen_chef_rect):
+            collision_message = {
+                "text": "Press SPACE to talk to Sato",
+                "pos": (ramen_chef_rect.x, ramen_chef_rect.y - 40)
+            }
+            conversation_npc = "ramen_owner"
+        # For "weapon_stall", check collision with weapon_seller_rect
+        elif player_rect.colliderect(weapon_seller_rect):
+            collision_message = {
+                "text": "Press SPACE to talk to Grim",
+                "pos": (weapon_seller_rect.x, weapon_seller_rect.y - 40)
+            }
+            conversation_npc = "weapon_stall"
+        else:
+            # Check collision for newspaper stall using newspaper_seller_rect
+            if player_rect.colliderect(newspaper_seller_rect):
+                collision_message = {
+                    "text": "Press SPACE to talk to Bob",
+                    "pos": (newspaper_seller_rect.x, newspaper_seller_rect.y - 40)
+                }
+                conversation_npc = "newspaper_stall"
+        
+        # Draw scene with optional collision message
+        draw_scene(collision_message)
+        
+        # Check if space is pressed while in collision
+        if conversation_npc and keys[pygame.K_SPACE]:
+            start_conversation(conversation_npc)
+        
+        pygame.display.flip()
+        clock.tick(30)

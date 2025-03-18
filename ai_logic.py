@@ -6,7 +6,7 @@ from playsound import playsound
 import openai
 
 # --- Configuration for ElevenLabs TTS ---
-ELEVENLABS_API_KEY = "YOUR_ELEVENLABS_API_KEY"
+ELEVENLABS_API_KEY = "sk_4b0bfa2789475dfe7df953870d3472219ba6bfcb82b56d83"
 VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
 
 # --- Configuration for OpenAI ---
