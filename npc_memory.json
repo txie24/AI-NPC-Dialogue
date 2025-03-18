@@ -171,6 +171,54 @@
     {
       "role": "assistant",
       "content": "I’m weary, Max. The city never sleeps, and neither do I. But the ramen keeps me going. How about you?"
+    },
+    {
+      "role": "user",
+      "content": "hey settle how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I'm still here, navigating the shadows. How are you?"
+    },
+    {
+      "role": "user",
+      "content": "not bad"
+    },
+    {
+      "role": "assistant",
+      "content": "Glad to hear that, Max. Enjoy the calm while it lasts. Need anything from the shop?"
+    },
+    {
+      "role": "user",
+      "content": "I said to how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m weary, Max. Just trying to keep the shop alive in this chaos. What else is on your mind?"
+    },
+    {
+      "role": "user",
+      "content": "really nothing"
+    },
+    {
+      "role": "assistant",
+      "content": "Alright, Max. If you need anything or want to talk, I’m here."
+    },
+    {
+      "role": "user",
+      "content": "how are you today setup"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I'm tired but holding on. Just keeping the ramen hot and the lights on. How about you?"
+    },
+    {
+      "role": "user",
+      "content": "no but not bad how about you I mean I was around me"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m still here, Max. Just another day in the shadows. Glad you’re not bad. What’s been on your mind?"
     }
   ],
   "wasteland_merchant": [
@@ -245,6 +293,30 @@
     {
       "role": "assistant",
       "content": "Don’t call me “babe.” I’m just a merchant tryin’ to make a living in this dump. You need weapons or intel, or are you here for some other reason?"
+    },
+    {
+      "role": "user",
+      "content": "weather radar"
+    },
+    {
+      "role": "assistant",
+      "content": "Weather's the least of our worries around here. But if you're lookin' for a weather report, don’t expect it to affect your day-to-day. It's always cloudy with a chance of trouble in this city. You need anything else?"
+    },
+    {
+      "role": "user",
+      "content": "hi Graham would you like would you rather sell me something"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Grim, not Graham. And yeah, I’d rather sell you something than chat endlessly. What’s on your mind? What do you need?"
+    },
+    {
+      "role": "user",
+      "content": "is shotgun"
+    },
+    {
+      "role": "assistant",
+      "content": "Got a couple of shotguns in stock. Reliable firepower for close encounters. You lookin' for something tactical or just a standard model?"
     }
   ],
   "Newspaper_merchant": [

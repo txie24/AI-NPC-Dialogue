@@ -68,7 +68,7 @@ def start_conversation(npc_key):
 def on_dialog_end():
     global in_dialog
     in_dialog = False
-    
+
 npc_stalls = {
     "ramen_owner": pygame.Rect(int(center_ramen - ramen_stall_image.get_width() / 2),
                                int(HEIGHT - ramen_stall_image.get_height() - -40),
@@ -107,6 +107,29 @@ newspaper_seller_rect = pygame.Rect(
 
 font = pygame.font.SysFont(None, 24)
 
+##########################################################
+# 新增1: wrap_text 函数, 用于在像素级别自动换行
+def wrap_text(text, font, max_width):
+    words = text.split()
+    lines = []
+    current_line = ""
+
+    for w in words:
+        # 如果 current_line 为空，则直接放 w
+        # 否则给 current_line 加个空格后再放 w
+        test_line = (current_line + " " + w).strip() if current_line else w
+        line_width, _ = font.size(test_line)
+        if line_width <= max_width:
+            current_line = test_line
+        else:
+            lines.append(current_line)
+            current_line = w
+
+    if current_line:
+        lines.append(current_line)
+    return lines
+##########################################################
+
 def draw_text_with_border(text, pos, font, text_color, border_color, border_width=2):
     x, y = pos
     for dx in range(-border_width, border_width+1):
@@ -117,13 +140,21 @@ def draw_text_with_border(text, pos, font, text_color, border_color, border_widt
     text_surface = font.render(text, True, text_color)
     screen.blit(text_surface, pos)
 
+##########################################################
+# 修改 draw_conversation_log, 用 wrap_text 来自动换行
 def draw_conversation_log():
     x = 10
     y = 10
     line_height = 24
+    max_width = 550  # 你想在屏幕上留给聊天内容的最大像素宽度
+
     for msg in conversation_log:
-        draw_text_with_border(msg, (x, y), font, WHITE, BLACK)
-        y += line_height
+        # 每条消息先调用 wrap_text 拆成多行
+        wrapped_lines = wrap_text(msg, font, max_width)
+        for line in wrapped_lines:
+            draw_text_with_border(line, (x, y), font, WHITE, BLACK)
+            y += line_height
+##########################################################
 
 def draw_scene(collision_message=None):
     screen.blit(background_image, (0, 0))

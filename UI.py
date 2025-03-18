@@ -70,6 +70,7 @@ def process_conversation(npc_key):
         conversation_text.see(tk.END)
         conversation_text.config(state=tk.DISABLED)
         game.add_chat_message(f"[SYSTEM]: {user_input}")
+        game.on_dialog_end()
         return
 
     # 显示用户输入
