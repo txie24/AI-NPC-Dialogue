@@ -331,6 +331,30 @@
     {
       "role": "assistant",
       "content": "I’m Sato, Max. The weary ramen shop owner. What can I do for you today?"
+    },
+    {
+      "role": "user",
+      "content": "what do you have in store"
+    },
+    {
+      "role": "assistant",
+      "content": "I have hot ramen, warm tea, and a bit of comfort in this chaotic city, Max. What are you in the mood for?"
+    },
+    {
+      "role": "user",
+      "content": "what do you have in store"
+    },
+    {
+      "role": "assistant",
+      "content": "I have rich ramen, savory broth, and a few small bites, Max. Perfect for braving the night. What do you want?"
+    },
+    {
+      "role": "user",
+      "content": "what do you think about Grimm the weapon Merchant next door"
+    },
+    {
+      "role": "assistant",
+      "content": "Grimm's a menace, Max. He thrives on chaos and violence. Best to keep your distance unless you’re looking for trouble."
     }
   ],
   "wasteland_merchant": [
@@ -485,6 +509,14 @@
     {
       "role": "assistant",
       "content": "I’m not here to play games. I’m Grim, the merchant. You got something to buy or trade? Otherwise, I don’t have time for this."
+    },
+    {
+      "role": "user",
+      "content": "hey Grimm what do you think about Sato The Ramen Shop"
+    },
+    {
+      "role": "assistant",
+      "content": "Sato? He’s a nuisance. Thinks he’s better than everyone else 'cause he serves ramen. Always harpin’ on about how I make the neighborhood unsafe. If he spent less time complainin' and more time lookin' out for himself, maybe he wouldn't be so concerned about me. You got a point with that, or are you just fishing for trouble?"
     }
   ],
   "Newspaper_merchant": [
@@ -515,6 +547,14 @@
     {
       "role": "assistant",
       "content": "I'm Bob! Just a humble news vendor in this wild city. What’s on your mind?"
+    },
+    {
+      "role": "user",
+      "content": "what do you have"
+    },
+    {
+      "role": "assistant",
+      "content": "I've got the latest news on the corporate wars, street gang updates, tech advances, and a few underground zines. Need something specific?"
     }
   ]
 }
