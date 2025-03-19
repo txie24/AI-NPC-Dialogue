@@ -1,10 +1,9 @@
-# UI.py
 import tkinter as tk
 import speech_recognition as sr
 from threading import Thread
-from ai_logic import get_npc_response, speak_text, NPCS
+from ai_logic import get_npc_response, speak_text, NPCS, NPC_VOICE_IDS
 import threading
-import game  # 用于同步对话到Pygame对话日志
+import game  # For syncing conversation messages with the game
 
 root = tk.Tk()
 root.title("AI NPC Dialogue System")
@@ -23,7 +22,7 @@ npc_buttons = []
 
 def get_voice_input():
     """
-    一次性录音 5~8 秒，阻塞等待结果，结束后再进行 GPT。
+    Records voice input for 5~8 seconds, then returns the recognized text.
     """
     r = sr.Recognizer()
     status_label.config(text="Status: Listening...")
@@ -48,17 +47,16 @@ def get_voice_input():
     finally:
         status_label.config(text="Status: Idle")
 
-def speak_text_async(text):
-    threading.Thread(target=speak_text, args=(text,)).start()
+def speak_text_async(text, voice_id=None):
+    threading.Thread(target=speak_text, args=(text, voice_id)).start()
 
 def process_conversation(npc_key):
     """
-    单轮对话: 录音 -> GPT -> (可选)TTS -> 结束
+    Single-round conversation: record voice → call GPT → (optional) TTS → end.
     """
     user_input = get_voice_input()
     npc_name = NPCS[npc_key]["display_name"]
 
-    # 如果识别失败，就不调用GPT
     error_messages = [
         "Listening timed out, please try again.",
         "Sorry, I did not catch that.",
@@ -73,7 +71,6 @@ def process_conversation(npc_key):
         game.on_dialog_end()
         return
 
-    # 显示用户输入
     conversation_text.config(state=tk.NORMAL)
     conversation_text.insert(tk.END, f"You to {npc_name}: {user_input}\n")
     conversation_text.see(tk.END)
@@ -83,26 +80,23 @@ def process_conversation(npc_key):
     status_label.config(text="Status: Processing...")
     npc_response = get_npc_response(npc_key, user_input)
 
-    # 显示 GPT 回复
     conversation_text.config(state=tk.NORMAL)
     conversation_text.insert(tk.END, f"{npc_name}: {npc_response}\n\n")
     conversation_text.see(tk.END)
     conversation_text.config(state=tk.DISABLED)
     game.add_chat_message(f"{npc_name}: {npc_response}")
 
-    # 可选TTS
+    # Trigger TTS with the NPC-specific voice
     if tts_var.get():
-        speak_text_async(npc_response)
+        speak_text_async(npc_response, NPC_VOICE_IDS.get(npc_key))
     
     status_label.config(text="Status: Idle")
-    
     game.on_dialog_end()
 
 def on_speak(npc_key):
     """
-    UI上点击“Speak to XXX”按钮时的回调: 只做一次对话
+    Callback for the UI buttons ("Speak to ..."). Runs a single conversation round.
     """
-    # 暂时禁用按钮，避免用户重复点击
     for button in npc_buttons:
         button.config(state=tk.DISABLED)
     
@@ -112,7 +106,7 @@ def on_speak(npc_key):
             button.config(state=tk.NORMAL)
     Thread(target=run).start()
 
-# 生成UI按钮: “Speak to Ramen Shop Owner”等
+# Create UI buttons for each NPC
 for key in NPCS:
     btn = tk.Button(root, text=f"Speak to {NPCS[key]['display_name']}",
                     command=lambda npc_key=key: on_speak(npc_key))
@@ -121,9 +115,9 @@ for key in NPCS:
 
 def trigger_conversation_from_game(npc_key):
     """
-    给 game.py 调用的函数:
-    当 Pygame 检测到碰撞并按下 SPACE 时，会调用这个函数。
+    Called by game.py when a conversation is triggered via in-game collision.
     """
     def safe_call():
         process_conversation(npc_key)
     root.after(0, safe_call)
+

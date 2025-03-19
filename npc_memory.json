@@ -283,6 +283,54 @@
     {
       "role": "assistant",
       "content": "Grimm's dangerous, Max. Always lurking, always armed. Best to stay on his good side—or avoid him entirely."
+    },
+    {
+      "role": "user",
+      "content": "pesado how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I'm weary but holding on. How are you doing?"
+    },
+    {
+      "role": "user",
+      "content": "Seattle how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s Sato, Max. I’m weary, but I keep going. How are you?"
+    },
+    {
+      "role": "user",
+      "content": "Ace Auto how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s Sato, Max. I’m just surviving in this city. What’s on your mind?"
+    },
+    {
+      "role": "user",
+      "content": "what's up Soto how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It's Sato, Max. I’m doing as well as I can in this city. What brings you in today?"
+    },
+    {
+      "role": "user",
+      "content": "hey so how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m weary, Max. Just trying to keep the ramen flowing. What about you?"
+    },
+    {
+      "role": "user",
+      "content": "hey what's your name"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m Sato, Max. The weary ramen shop owner. What can I do for you today?"
     }
   ],
   "wasteland_merchant": [
@@ -397,6 +445,46 @@
     {
       "role": "assistant",
       "content": "Sato? He’s got his head in the clouds, thinkin' he can fix this neighborhood with his ramen shop. All he does is complain about me and my business. If he wants to talk about safety, he should mind his own. The streets aren’t his responsibility. You got something to add, or are you just stirrin’ the pot?"
+    },
+    {
+      "role": "user",
+      "content": "hey Graham how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s Grim, not Graham. And I’m doin' what I do best—surviving. You need something or just here to mess around with names?"
+    },
+    {
+      "role": "user",
+      "content": "hey Graham how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s Grim. You forget that already? I'm gettin' by, same as always. You after anything specific, or just here to waste my time?"
+    },
+    {
+      "role": "user",
+      "content": "hey Grim how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m gettin' by. Just another day in the grind. You need something or just checkin’ in? Make it quick; I’ve got a business to run."
+    },
+    {
+      "role": "user",
+      "content": "hey Graham how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "It’s Grim. Seriously, how hard is that to remember? I'm fine, just busy. What do you want?"
+    },
+    {
+      "role": "user",
+      "content": "play what's your name"
+    },
+    {
+      "role": "assistant",
+      "content": "I’m not here to play games. I’m Grim, the merchant. You got something to buy or trade? Otherwise, I don’t have time for this."
     }
   ],
   "Newspaper_merchant": [
@@ -419,6 +507,14 @@
     {
       "role": "assistant",
       "content": "Hello! What can I get for you today? News, gossip, or maybe a little bit of hope?"
+    },
+    {
+      "role": "user",
+      "content": "hey what's your name"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm Bob! Just a humble news vendor in this wild city. What’s on your mind?"
     }
   ]
 }

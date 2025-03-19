@@ -7,7 +7,14 @@ import pygame
 
 # --- Configuration for ElevenLabs TTS ---
 ELEVENLABS_API_KEY = ""
-VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Replace with your desired voice ID from ElevenLabs
+VOICE_ID = "2EiwWnXFnvU5JabPnv8n"  # Default voice if none provided
+
+# Mapping of NPCs to their unique voice IDs
+NPC_VOICE_IDS = {
+    "ramen_owner": "N2lVS1w4EtoT3dr4eOWO",       # Sato
+    "Weapons_merchant": "2EiwWnXFnvU5JabPnv8n",   # Grim
+    "Newspaper_merchant": "ODq5zmih8GrVes37Dizd"    # Bob
+}
 
 # --- Configuration for OpenAI ---
 openai.api_key = ""
@@ -79,12 +86,15 @@ def save_memory(memory):
 
 npc_conversations = load_memory()
 
-def speak_text(text):
+def speak_text(text, voice_id=None):
     """
     Uses ElevenLabs TTS API to convert text to speech.
-    Plays the resulting MP3 using pygame.mixer (original version).
+    Plays the resulting MP3 using pygame.mixer.
     """
-    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
+    # Use the provided voice_id or fall back to the default VOICE_ID.
+    if voice_id is None:
+        voice_id = VOICE_ID
+    url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
     headers = {
         "Accept": "audio/mpeg",
         "xi-api-key": ELEVENLABS_API_KEY,
@@ -131,4 +141,3 @@ def get_npc_response(npc_key, user_input):
     except Exception as e:
         print("Error calling GPT API:", e)
         return "Sorry, I can't generate an answer right now."
-

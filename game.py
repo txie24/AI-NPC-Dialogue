@@ -1,9 +1,8 @@
 import pygame
 import sys
-import threading
-import UI  # 确保 UI.py 中有 trigger_conversation_from_game 函数
+import UI  # Ensure UI.py defines trigger_conversation_from_game
 
-conversation_log = []  # 用于存储最近几条对话文本
+conversation_log = []  # Stores the latest conversation messages
 
 pygame.init()
 
@@ -41,7 +40,7 @@ center_ramen = WIDTH / 4
 center_weapon = WIDTH / 2
 center_newspaper = 3 * WIDTH / 4
 
-# NPC与ai_logic对应关系
+# Mapping from game stall names to NPC keys in ai_logic.py
 npc_mappings = {
     "ramen_owner": "ramen_owner",
     "weapon_stall": "Weapons_merchant",
@@ -59,10 +58,11 @@ in_dialog = False
 def start_conversation(npc_key):
     global in_dialog
     if in_dialog:
-        return  # 正在对话，忽略本次SPACE
+        return  # Skip if already in conversation
     in_dialog = True
 
     if npc_key in npc_mappings:
+        # Trigger conversation in the UI with the correct NPC key
         UI.trigger_conversation_from_game(npc_mappings[npc_key])
 
 def on_dialog_end():
@@ -107,16 +107,12 @@ newspaper_seller_rect = pygame.Rect(
 
 font = pygame.font.SysFont(None, 24)
 
-##########################################################
-# 新增1: wrap_text 函数, 用于在像素级别自动换行
 def wrap_text(text, font, max_width):
     words = text.split()
     lines = []
     current_line = ""
 
     for w in words:
-        # 如果 current_line 为空，则直接放 w
-        # 否则给 current_line 加个空格后再放 w
         test_line = (current_line + " " + w).strip() if current_line else w
         line_width, _ = font.size(test_line)
         if line_width <= max_width:
@@ -128,7 +124,6 @@ def wrap_text(text, font, max_width):
     if current_line:
         lines.append(current_line)
     return lines
-##########################################################
 
 def draw_text_with_border(text, pos, font, text_color, border_color, border_width=2):
     x, y = pos
@@ -140,21 +135,17 @@ def draw_text_with_border(text, pos, font, text_color, border_color, border_widt
     text_surface = font.render(text, True, text_color)
     screen.blit(text_surface, pos)
 
-##########################################################
-# 修改 draw_conversation_log, 用 wrap_text 来自动换行
 def draw_conversation_log():
     x = 10
     y = 10
     line_height = 24
-    max_width = 550  # 你想在屏幕上留给聊天内容的最大像素宽度
+    max_width = 550
 
     for msg in conversation_log:
-        # 每条消息先调用 wrap_text 拆成多行
         wrapped_lines = wrap_text(msg, font, max_width)
         for line in wrapped_lines:
             draw_text_with_border(line, (x, y), font, WHITE, BLACK)
             y += line_height
-##########################################################
 
 def draw_scene(collision_message=None):
     screen.blit(background_image, (0, 0))
@@ -190,6 +181,7 @@ def main_loop():
                 pygame.quit()
                 sys.exit()
         
+        # Process Pygame events and update game state
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             player_rect.x -= player_speed
@@ -210,17 +202,26 @@ def main_loop():
             collision_message = {"text": "Press SPACE to talk to Grim",
                                  "pos": (weapon_seller_rect.x, weapon_seller_rect.y - 40)}
             conversation_npc = "weapon_stall"
-        else:
-            if player_rect.colliderect(newspaper_seller_rect):
-                collision_message = {"text": "Press SPACE to talk to Bob",
-                                     "pos": (newspaper_seller_rect.x, newspaper_seller_rect.y - 40)}
-                conversation_npc = "newspaper_stall"
+        elif player_rect.colliderect(newspaper_seller_rect):
+            collision_message = {"text": "Press SPACE to talk to Bob",
+                                 "pos": (newspaper_seller_rect.x, newspaper_seller_rect.y - 40)}
+            conversation_npc = "newspaper_stall"
 
         draw_scene(collision_message)
 
-        # 一次对话: player按空格 => start_conversation
         if conversation_npc and keys[pygame.K_SPACE]:
             start_conversation(conversation_npc)
 
         pygame.display.flip()
         clock.tick(30)
+        
+        # Update the Tkinter UI
+        try:
+            UI.root.update()
+        except:
+            # If the UI is closed, exit the loop
+            pygame.quit()
+            sys.exit()
+
+if __name__ == "__main__":
+    main_loop()
