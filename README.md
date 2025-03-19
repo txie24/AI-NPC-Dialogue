@@ -17,11 +17,12 @@ Mar 17
 - Ensure that only one recording will be initiated by using the global "in conversation" lock or disabling Key+DisableSpace.
 - Call game.on_dialog_end() at all points where the dialog may end (including errors, timeouts, user interruptions) Fix some error about did not catch that.
 - Update warp_text
-- 
+Mar 18
+- Now each NPCs has a unique voice
 ## TODOs
 - Incorporate the game and the Side scroller game demo, so each npc corresponds to the correct AI NPC assistant in **ai_logic.py** (✔)
-- Fix the Voice latency including both input and output 
-- Update error messages so that if there is an error like "Listening timed out, please try again." it wont be sent to the AI as an input.
+- Fix the Voice latency including both input and output(✔) 
+- Update error messages so that if there is an error like "Listening timed out, please try again." it wont be sent to the AI as an input.(✔)
 
 ## Features
 
